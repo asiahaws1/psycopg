@@ -1,10 +1,13 @@
 from flask import Flask, jsonify, request
-import db
+import psycopg2
 import os
 
-app_host = os.environ.get("APP_HOST", "0.0.0.0")
-app_port = int(os.environ.get("APP_PORT", "5000"))
+database_name = os.environ.get('DATABASE_NAME')
+app_host = os.environ.get('APP_HOST')
+app_port = os.environ.get('APP_PORT')
 
+conn = psycopg2.connect(f"dbname={database_name}")
+cursor = conn.cursor()
 
 def get_conn():
     return db.get_connection()
